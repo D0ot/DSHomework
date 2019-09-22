@@ -2,7 +2,7 @@
 #include <random>
 #include <array>
 #include "ch02/q3.h"
-
+#include "ch02/q6.h"
 
 void SeqSetBasicTest()
 {
@@ -114,5 +114,13 @@ void SetTest()
 
 int main(int, char**) {
     //SeqSetBasicTest();
-    SetTest();
+    //SetTest();
+    std::array<int,18> data = {1,1,2,2,2,3,4,5,5,5,6,6,7,7,8,8,8,9};
+    auto size = makeItUnique(data);
+    for(size_t i = 0; i < size; ++i)
+    {
+        std::cout << data[i] << ' ';
+    }
+    std::cout << std::endl;
+    return 0;
 }

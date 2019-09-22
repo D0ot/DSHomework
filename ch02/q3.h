@@ -2,16 +2,19 @@
  * @file: ch02/q3.cpp
  * @author: D0ot at github
  * @date: 2019/9/21
+ *      This file applies to question 2.3 2.8 2.9
  */
-
+#ifndef CH02Q3_H
+#define CH02Q3_H
 #include <iostream>
 #include <cstring>
 
+
+
+
+
 // The type "T" must can be compared
 // maybe we can use concepts later
-
-
-
 
 template<typename T>
 class SeqSet
@@ -160,7 +163,7 @@ void SeqSet<T>::acquireMemory(size_t alloc_size)
 }
 
 template<typename T>
-SeqSet<T>::SeqSet(size_t pre_size) : m_size(0), m_ptr(new T[pre_size]), m_alloc_size(pre_size)
+SeqSet<T>::SeqSet(size_t pre_size) : m_ptr(new T[pre_size]), m_size(0), m_alloc_size(pre_size)
 {
 }
 
@@ -224,7 +227,7 @@ bool SeqSet<T>::remove(const T& v)
 
     if(m_ptr[pos] == v)
     {
-        removeAtIndex(pos);
+        return removeAtIndex(pos);
     }else
     {
         return false;
@@ -342,3 +345,5 @@ SeqSet<T> SeqSet<T>::operator-(const SeqSet<T> & s)
 
     return ret;
 }
+
+#endif 
