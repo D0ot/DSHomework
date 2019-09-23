@@ -19,7 +19,7 @@ template<typename T>
 void SeqSetAndInPlace(SeqSet<T>& a, const SeqSet<T>& b)
 {
     size_t i = 0, j = 0, k = 0;
-    while(i < a.size() && j < a.size())
+    while(i < a.size() && j < b.size())
     {
         if(a[i] < b[j])
         {
