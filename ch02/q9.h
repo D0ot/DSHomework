@@ -2,7 +2,7 @@
  * @file : ch02/q9.h
  * @author : D0ot at github
  * @date : 2019/9/23
- *      this applies to question 2.6 2.7
+ *      this applies to question 2.9:q
  */
 
 #ifndef CH02Q9_H
