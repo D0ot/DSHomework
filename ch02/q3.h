@@ -47,6 +47,12 @@ class SeqSet
 
     // clear all the acquired memory
     void clear();
+
+    // resize SeqSet to length 
+    // m_size = length
+    // and elements beyond length will be discarded
+    bool resize(size_t length);
+
     T& operator[](size_t index);
     const T& operator[](size_t index)const;
     SeqSet &operator=(const SeqSet & s);
@@ -244,6 +250,14 @@ void SeqSet<T>::clear()
 }
 
 template<typename T>
+bool SeqSet<T>::resize(size_t length)
+{
+    m_size = length;
+    return true;
+}
+
+
+template<typename T>
 T& SeqSet<T>::operator[] (size_t index)
 {
     return m_ptr[index];
@@ -319,7 +333,7 @@ SeqSet<T> SeqSet<T>::operator-(const SeqSet<T> & s)
 {
     // a - b
     // in a but not in b
-    SeqSet<int> ret(std::max(m_size, s.m_size));
+    SeqSet<T> ret(std::max(m_size, s.m_size));
     size_t i = 0, j = 0;
     while(i < m_size && j < s.m_size)
     {

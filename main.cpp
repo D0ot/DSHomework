@@ -3,6 +3,7 @@
 #include <array>
 #include "ch02/q3.h"
 #include "ch02/q6.h"
+#include "ch02/q8.h"
 
 void SeqSetBasicTest()
 {
@@ -104,6 +105,7 @@ void SetTest()
     SeqSet<int> d = a | b;
     SeqSet<int> e = a - b;
 
+    std::cout << "Set Test Result:\n";
     std::cout << "a : " << a << std::endl;
     std::cout << "b : " << b << std::endl;
     std::cout << "a&b : " << c << std::endl;
@@ -112,9 +114,39 @@ void SetTest()
 
 }
 
-int main(int, char**) {
-    //SeqSetBasicTest();
-    //SetTest();
+void SetTestInPlace()
+{
+    constexpr size_t N = 10;
+
+    std::default_random_engine dre;
+    std::uniform_int_distribution<int> dis(0, 110);
+
+    SeqSet<int> a(N);
+    SeqSet<int> b(N);
+
+    for(size_t i = 0; i <= N; ++i)
+    {
+        a.insert(dis(dre));
+        b.insert(dis(dre));
+    }
+
+    SeqSet<int> c = a;
+    SeqSet<int> d = a;
+
+    SeqSetAndInPlace(c, b);
+    SeqSetMinusInPlace(d, b);
+
+    std::cout << "Set Test In Place : \n";
+    std::cout << "a : " << a << std::endl;
+    std::cout << "b : " << b << std::endl;
+    std::cout << "a&b : " << c << std::endl;
+    std::cout << "a-b : " << d << std::endl;
+
+}
+
+void uniqueTest()
+{
+
     std::array<int,18> data = {1,1,2,2,2,3,4,5,5,5,6,6,7,7,8,8,8,9};
     auto size = makeItUnique(data);
     for(size_t i = 0; i < size; ++i)
@@ -122,5 +154,11 @@ int main(int, char**) {
         std::cout << data[i] << ' ';
     }
     std::cout << std::endl;
+}
+
+
+int main(int, char**) {
+    SetTest();
+    SetTestInPlace();
     return 0;
 }
