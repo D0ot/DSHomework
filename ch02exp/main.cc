@@ -3,7 +3,6 @@
 #include <ctime>
 #include "ch02exp.h"
 
-
 template<typename T>
 size_t array_size(T& a)
 {
@@ -354,12 +353,94 @@ void ext_exp2(void)
 
 }
 
+
+void ext_exp3(void)
+{
+    SeqList<int> s1, s2;
+
+    genRandomSeqSet(s1, 15);
+
+    s2 = s1;
+
+    s1.removeAtIndex(0);
+
+    std::cout << "s1 = " << s1 << std::endl;
+    std::cout << "s2 = " << s2 << std::endl;
+    std::cout << "s1 is subset of s2 ? " << isSubSetOf(s2 ,s1) << std::endl;
+
+    s1.uniqueOrderedInsert(20);
+
+    std::cout << "s1 = " << s1 << std::endl;
+    std::cout << "s2 = " << s2 << std::endl;
+    std::cout << "s1 is subset of s2 ? " << isSubSetOf(s2 ,s1) << std::endl;
+}
+
+void ext_exp4(void)
+{
+
+}
+
+
+
 int main(void)
 {
     // initialize the random seed
     std::srand(std::time(NULL));
-    ext_exp1();
-    exp4();
-    ext_exp2();
+
+    void(*funs[])() = 
+    {
+        exp1, exp2, exp3, exp4, exp5, exp6, exp7, ext_exp1, ext_exp2, ext_exp3, ext_exp4
+    };
+
+    int n = 0;
+    while(1)
+    {
+        std::cout << "1 求顺序表中第 i 个元素\n";
+        std::cout << "2 在第i个节点前插入值为x的节点\n";
+        std::cout << "3 删除顺序表中第 i 个元素节点\n";
+        std::cout << "4 在一个递增有序顺序表L中插入一个值为x的元素，并保持其有序性\n";
+        std::cout << "5 将顺序表中的奇数项与偶数项分开\n";
+        std::cout << "6 求两个递增有序顺序表中的公共元素\n";
+        std::cout << "7 删除递增有序顺序表中的重复元素，并统计移动次数，要求时间性能最好\n";
+        std::cout << "8 扩展实验，对递增有序顺序表进行合并，合并为一个集合并放入L1中保存,要求时间性能最好\n";
+        std::cout << "9 扩展实验，递增有序顺序表实现集合的交集，并集，差集\n";
+        std::cout << "10 扩展实验，判定递增有序顺序表表示的集合A, B, A是否是B的子集\n";
+        std::cout << "11 扩展实验，两个序列的中位数问题\n";
+
+
+
+        std::cout << "请输入实验编号 1 - 10 查看实验结果。\n";
+        std::cout << "键入非数字内容即可退出\n";
+
+        std::cin >> n;
+
+
+        if(!std::cin.good())
+        {
+            break;
+        }
+
+        if(n <=0 || n > 10)
+        {
+            std::cout << "输入数字无效，请重新输入\n";
+        }
+        else
+        {
+            system("/usr/bin/clear");
+            std::cout << "--------------------\n";
+            (funs[n-1])();
+            std::cout << "--------------------\n";
+            std::string temp;
+            std::cout << "输入回车继续。\n";
+            std::getline(std::cin, temp);
+            std::getline(std::cin, temp);
+            system("/usr/bin/clear");
+        }
+
+
+    }
+    std::cout << "键入非数字内容，程序退出。\n";
+
+
     return 0;
 }

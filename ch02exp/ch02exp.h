@@ -599,32 +599,35 @@ void combineIntoSet(SeqList<T> &L1, SeqList<T> &L2)
 template<typename T>
 bool isSubSetOf(SeqList<T> &s, SeqList<T> &sub)
 {
-    size_t i = 0, j = 0;
-
-    while(i < s.size() && j < s.size())
-    {
-        if(s[i] < s[j])
-        {
-
-        } else if (s[i] > s[j])
-        {
-
-        } else
-        {
-            ++i;
-            ++j;
-
-        }
-    }
-
-    if(j < s.size())
+    if(sub.size() > s.size())
     {
         return false;
     }
-    else
+
+    if(sub.size() == 0)
     {
         return true;
     }
+
+    size_t i = 0, j = 0;
+
+    while(i < s.size() && j < sub.size())
+    {
+        if(sub[j] == s[i])
+        {
+            ++j;
+        }
+        ++i;
+    }
+
+    if(j < sub.size())
+    {
+        return false;
+    } else 
+    {
+        return true;
+    }
+
 
 
 }
