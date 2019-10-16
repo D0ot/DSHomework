@@ -319,7 +319,6 @@ void ext_exp1(void)
     while(i--)
     {
         s1.orderedInsert(std::rand() % 30);
-        std::cout << "s1 = " << s1 << std::endl;
         s2.orderedInsert(std::rand() % 30);
     }
 
