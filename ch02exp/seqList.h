@@ -1,8 +1,8 @@
-#ifndef CH02_EXP_H
-#define CH02_EXP_H
+#ifndef SEQ_LIST_H 
+#define SEQ_LIST_H 
 
 /**
- * @file : ch02exp.h
+ * @file : seqList.h
  * @author : doot
  * @date : 2019/10/15
  * @brief :
@@ -635,4 +635,4 @@ bool isSubSetOf(SeqList<T> &s, SeqList<T> &sub)
 
 
 
-#endif //CH02_EXP_H
+#endif // SEQ_LIST_H

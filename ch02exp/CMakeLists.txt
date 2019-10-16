@@ -1,1 +1,1 @@
-add_executable(ch02exp ./main.cc)
+add_executable(seqlist_test ./main.cc)

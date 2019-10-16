@@ -1,7 +1,7 @@
 #include <iostream>
 #include <cstdlib>
 #include <ctime>
-#include "ch02exp.h"
+#include "seqList.h"
 
 template<typename T>
 size_t array_size(T& a)
@@ -171,7 +171,6 @@ void exp4(void)
 
     }
     std::cout << "s = " << s << std::endl;
-
 
 }
 
