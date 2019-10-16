@@ -6,6 +6,7 @@
 #include "ch02/q6.h"
 #include "ch02/q8.h"
 #include "ch02/q9.h"
+#include "linkedList.h"
 
 namespace 
 {
