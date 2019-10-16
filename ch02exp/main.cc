@@ -377,6 +377,27 @@ void ext_exp3(void)
 
 void ext_exp4(void)
 {
+    SeqList<int> s1, s2;
+
+    int testcases1[] = {
+        11,13,15,17,19
+    };
+
+    int testcases2[] = {
+        2,4,6,8,20
+    };
+
+
+    const size_t length = sizeof(testcases1)/sizeof(testcases1[0]);
+
+    size_t i = 0, j = length - 1;
+    while(i < j)
+    {
+        
+    }
+
+
+
 
 }
 
