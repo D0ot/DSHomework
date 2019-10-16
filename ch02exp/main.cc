@@ -375,6 +375,64 @@ void ext_exp3(void)
     std::cout << "s1 is subset of s2 ? " << isSubSetOf(s2 ,s1) << std::endl;
 }
 
+void findMidElem(SeqList<int>& a, SeqList<int>& b, int l1, int r1, int l2, int r2)
+{
+    if(l1 >= r1 || l2 >= r2)
+    {
+        if(a[l1]>b[l2])
+        {
+            std::cout << "mid value : " << b[l2];
+        }
+        else
+        {
+            std::cout << "mid value : " << a[l1];
+        }
+        std::cout << std::endl;
+        return;
+    }
+
+    // prevent from overflow
+    // int mid1 = (l1 + r1)/2, it risks overflowing
+    int mid1 = l1 + (r1 - l1)/2;
+    int mid2 = l2 + (r2 - l2)/2;
+
+    std::cout << "mid1, mid2 = " << mid1 << " , " << mid2 << std::endl;
+
+    // if mid value of a is same with mid value of b
+    // a[mid1] or b[mid2] is not final result
+    if(a[mid1] == b[mid2])
+    {
+        std::cout << "mid value : " << a[mid1];
+        return;
+    }
+    else if(a[mid1] < b[mid2])
+    {
+        if((r1 + l1) % 2)
+        {
+            findMidElem(a, b, mid1 + 1, r1, l2, mid2);
+        }
+        else
+        {
+            findMidElem(a, b, mid1, r1, l2, mid2);
+        }
+    } else
+    {
+        if((r2 + l2) % 2)
+        {
+            findMidElem(a, b, l1, mid1, mid2+1, r2);
+        }
+        else
+        {
+            findMidElem(a,b, l1, mid1, mid2, r2);
+        }
+    }
+
+
+
+
+}
+
+
 void ext_exp4(void)
 {
     SeqList<int> s1, s2;
@@ -390,13 +448,10 @@ void ext_exp4(void)
 
     const size_t length = sizeof(testcases1)/sizeof(testcases1[0]);
 
-    size_t i = 0, j = length - 1;
-    while(i < j)
-    {
-        
-    }
+    genSeqSetByTestcase(s1, testcases1, length);
+    genSeqSetByTestcase(s2, testcases2, length);
 
-
+    findMidElem(s1, s2, 0, length, 0, length);
 
 
 }
@@ -430,7 +485,7 @@ int main(void)
 
 
 
-        std::cout << "请输入实验编号 1 - 10 查看实验结果。\n";
+        std::cout << "请输入实验编号 1 - 11 查看实验结果。\n";
         std::cout << "键入非数字内容即可退出\n";
 
         std::cin >> n;
@@ -441,7 +496,7 @@ int main(void)
             break;
         }
 
-        if(n <=0 || n > 10)
+        if(n <=0 || n > 11)
         {
             std::cout << "输入数字无效，请重新输入\n";
         }
