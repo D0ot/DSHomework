@@ -149,7 +149,7 @@ bool insertAtIndex(Node *head, int i, elementType &v)
 
 
 // question 2.12
-Node* linkLoopedList(Node *list1, Node *list2)
+void linkLoopedList(Node *list1, Node *list2)
 {
     Node* tail1 = list1;
     Node* tail2 = list2;
@@ -171,7 +171,6 @@ Node* linkLoopedList(Node *list1, Node *list2)
 
     delete list2;
 
-    return list1;
 }
 
 
@@ -239,7 +238,6 @@ void reverseLinkedList(Node *head)
 Node* combineLinkedListReversed(Node *A, Node *B)
 {
     Node* head = new Node;
-    Node* cur = head;
 
     Node*i = A->next, *j = B->next;
 
@@ -261,27 +259,23 @@ Node* combineLinkedListReversed(Node *A, Node *B)
             // insert it twice
 
             insertAfter(head, j->data);
-            cur = cur->next;
-            insertAfter(cur, j->data);
+            insertAfter(head, j->data);
 
             i = i->next;
             j = j->next;
         }
-        cur = cur->next;
     }
 
     while(i)
     {
-        insertAfter(cur, i->data);
+        insertAfter(head, i->data);
         i = i -> next;
-        cur = cur ->next;
     }
 
     while(j)
      {
-        insertAfter(cur, j->data);
+        insertAfter(head, j->data);
         j = j -> next;
-        cur = cur ->next;
     }
 
     return head;
@@ -332,7 +326,7 @@ bool isDoubleLinkedListSymmetrical(dnode * dlList)
 
     dnode* last_forward = dlList;
 
-    while(forward != backward)
+    while(forward != backward && last_forward != backward) 
     {
         std::cout << "f and b : " << forward->data << ", " << backward->data << std::endl;; 
         if(forward->data != backward->data)

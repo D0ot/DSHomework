@@ -83,14 +83,14 @@ void interface(void)
         std::cout << "链表2内容 : " << head2 << std::endl;
 
 
-        makeLinkedListLoop(head);
-        makeLinkedListLoop(head2);
+        //makeLinkedListLoop(head);
+        //makeLinkedListLoop(head2);
 
         //head = linkLoopedList(head, head2);
-        linkedListOrInPlace(head, head2);
-        //Node* head3 = combineLinkedListReversed(head, head2);
+        //linkedListOrInPlace(head, head2);
+        Node* head3 = combineLinkedListReversed(head, head2);
 
-        std::cout << "链表内容 : " << head << std::endl;
+        std::cout << "链表内容 : " << head3 << std::endl;
 
 
         std::cout << "dl test\n";
@@ -99,11 +99,11 @@ void interface(void)
         dlListInsert(dh1, 1);
         dlListInsert(dh1, 2);
         dlListInsert(dh1, 3);
-        dlListInsert(dh1, 5);
-        dlListInsert(dh1, 6);
-        dlListInsert(dh1, 7);
-        dlListInsert(dh1, 8);
-        dlListInsert(dh1, 9);
+        dlListInsert(dh1, 4);
+        dlListInsert(dh1, 4);
+        dlListInsert(dh1, 3);
+        dlListInsert(dh1, 2);
+        dlListInsert(dh1, 1);
 
         std::cout << "dh1 : " << dh1 << std::endl;
         dlListMakeItLoop(dh1);
