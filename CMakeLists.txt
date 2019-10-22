@@ -7,6 +7,7 @@ set(ROOT_DIR ${CMAKE_CURRENT_SOURCE_DIR})
 add_subdirectory(googletest)
 add_subdirectory(ch02)
 add_subdirectory(ch02exp)
+add_subdirectory(ch03)
 
 add_executable(DSHomeWork main.cpp)
 target_compile_options(DSHomeWork PRIVATE -g -Wall -Wextra)
