@@ -1,0 +1,1 @@
+add_executable(seqlist_test ./main.cc)
