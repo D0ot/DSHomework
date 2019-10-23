@@ -87,8 +87,6 @@ void stackOutputSeq(std::vector<int> &input)
     std::cout << "count = " << count << std::endl;
 }
 
-
-// input reversed
 bool stackOutputCheck(const std::vector<int> &input, const std::vector<int> &seq)
 {
     std::vector<int> aux;
