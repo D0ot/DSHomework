@@ -1,1 +1,1 @@
-add_executable(list_test ./main2.cc)
+add_executable(list_test ./main.cc)
