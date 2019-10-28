@@ -1,6 +1,7 @@
 #include "q1.h"
 #include "q2.h"
 #include "q5.h"
+#include "q12.h"
 #include "tools.h"
 
 int main(void)
@@ -30,6 +31,12 @@ int main(void)
     SHOW_EXP(isPair("((( [ { }] ()()(()((((()))))) [[[[{{((( x xx x x x x)))}}]]]] )))"));
 
 
+    SHOW_STATEMENT(P2(5));
+    SHOW_STATEMENT(P(4));
+    int M;
+    SHOW_STATEMENT(P3(4,&M));
+    SHOW_EXP(M);
+    SHOW_EXP(ack(2,2));
     
 
     return 0;

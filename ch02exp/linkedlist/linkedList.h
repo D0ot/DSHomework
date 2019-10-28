@@ -55,6 +55,9 @@ bool deleteNode(Node *parent)
     }
 }
 
+
+
+// make a signle linked list a looped list
 void makeLinkedListLoop(Node *head)
 {
     Node* iter = head;
@@ -68,6 +71,7 @@ void makeLinkedListLoop(Node *head)
 }
 
 
+// make a lopped list a single linked list
 void makeLinkedListNotLoop(Node *head)
 {
     Node* iter = head;
@@ -116,6 +120,7 @@ void insertAfterHead(Node *head, elementType &v)
     head -> next = newNode;
     newNode -> data= v;
 }
+
 
 void insertAtBack(Node *head, const elementType &v)
 {
