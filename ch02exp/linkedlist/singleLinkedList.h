@@ -23,6 +23,7 @@ class SingleLinkedList
     friend std::ostream& operator<<(std::ostream& os, SingleLinkedList<P>& sll);
 private:
     SLLNode<T> *m_head;
+    bool m_log;
 protected:
     void init();
     void destory();
@@ -44,6 +45,10 @@ public:
     void insertHead(const T& e);
     T& operator[](const size_t index);
     SLLNode<T> *find(const T&e);
+
+    // for exp purpose
+
+    void enableLog(bool e);
 };
 
 template<typename T>
@@ -51,19 +56,32 @@ void SingleLinkedList<T>::init()
 {
     m_head = new SLLNode<T>();
     m_head->next = nullptr;
+    m_log = false;
 }
 
 template<typename T>
 void SingleLinkedList<T>::destory()
 {
     auto tmp = m_head;
-    while(tmp -> next)
+    if(m_log)
+    {
+        std::cout << "Destory the SLL\n";
+    }
+    while(tmp)
     {
        auto tmp2 = tmp;
        tmp = tmp->next;
+       if(m_log)
+       {
+           std::cout << "Delete the SLLNode{" << tmp2->data  << ", " <<tmp2->next << "} @ " << tmp2 << std::endl;
+       }
        delete tmp2;
     }
     m_head = nullptr;
+    if(m_log)
+    {
+        std::cout << "Destory done\n";
+    }
 }
 
 template<typename T>
@@ -94,6 +112,8 @@ void SingleLinkedList<T>::remove(SLLNode<T> *p)
     p->next = tmp;
 }
 
+
+// get the parent of the index
 template<typename T>
 SLLNode<T> *SingleLinkedList<T>::indexToPointer(const size_t index)
 {
@@ -176,7 +196,21 @@ void SingleLinkedList<T>::insertHead(const T& e)
 template<typename T>
 T& SingleLinkedList<T>::operator[](const size_t index)
 {
-    return indexToPointer(index)->data;
+    SLLNode<T> *tmp;
+    try 
+    {
+        tmp = indexToPointer(index)->next;
+    }
+    catch(std::invalid_argument& e)
+    {
+        throw std::invalid_argument("error, SingleLinkedList<T>::operator[], index out of range");
+    }
+    if(tmp == nullptr)
+    {
+       throw std::invalid_argument("error, SingleLinkedList<T>::operator[], index out of range");
+    }
+    return tmp->data;
+    
 }
 
 template<typename T>
@@ -208,6 +242,13 @@ SLLNode<T> *SingleLinkedList<T>::find(const T& e)
     };
 
     return find(predicate);
+}
+
+
+template<typename T>
+void SingleLinkedList<T>::enableLog(bool e)
+{
+    m_log = e;
 }
 
 template<typename T>
