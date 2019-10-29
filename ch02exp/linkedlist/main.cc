@@ -495,6 +495,7 @@ void interface(void)
             std::cout << prompts[choice-1] << std::endl;
             fs[choice-1]();
             std::getline(std::cin, tmp);
+            std::getline(std::cin, tmp);
             system("/usr/bin/clear");
         } 
 
@@ -504,12 +505,7 @@ void interface(void)
         std::cin >> choice;
     }
 
-
-    
-
 }
-
-
 
 
 
