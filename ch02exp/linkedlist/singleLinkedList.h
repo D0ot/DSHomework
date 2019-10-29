@@ -21,6 +21,10 @@ class SingleLinkedList
 {
     template<typename P>
     friend std::ostream& operator<<(std::ostream& os, SingleLinkedList<P>& sll);
+
+    template<typename P>
+    friend void splitList(SingleLinkedList<P>& sll, SingleLinkedList<P>& t, SingleLinkedList<P>& f, std::function<bool(const P&)> predicate);
+
 private:
     SLLNode<T> *m_head;
     bool m_log;
@@ -41,6 +45,7 @@ public:
     void insert(const size_t index, const T& e);
     void remove(const size_t index);
     size_t size();
+    void clear();
     void insertTail(const T& e);
     void insertHead(const T& e);
     T& operator[](const size_t index);
@@ -62,26 +67,8 @@ void SingleLinkedList<T>::init()
 template<typename T>
 void SingleLinkedList<T>::destory()
 {
-    auto tmp = m_head;
-    if(m_log)
-    {
-        std::cout << "Destory the SLL\n";
-    }
-    while(tmp)
-    {
-       auto tmp2 = tmp;
-       tmp = tmp->next;
-       if(m_log)
-       {
-           std::cout << "Delete the SLLNode{" << tmp2->data  << ", " <<tmp2->next << "} @ " << tmp2 << std::endl;
-       }
-       delete tmp2;
-    }
-    m_head = nullptr;
-    if(m_log)
-    {
-        std::cout << "Destory done\n";
-    }
+    clear();
+    delete m_head;
 }
 
 template<typename T>
@@ -107,9 +94,15 @@ void SingleLinkedList<T>::insert(SLLNode<T> *p, const T& e)
 template<typename T>
 void SingleLinkedList<T>::remove(SLLNode<T> *p)
 {
-    auto tmp = p->next->next;
-    delete p->next;
-    p->next = tmp;
+    if(p->next)
+    {
+        auto tmp = p->next->next;
+        delete p->next;
+        p->next = tmp;
+    }else
+    {
+        throw std::invalid_argument("");
+    }
 }
 
 
@@ -119,7 +112,7 @@ SLLNode<T> *SingleLinkedList<T>::indexToPointer(const size_t index)
 {
     if(index == 0)
     {
-        throw std::invalid_argument("SingleLinkedList<T>::indexToPointer, index is 0");
+        throw std::invalid_argument("error, SingleLinkedList<T>::indexToPointer, index is 0");
     }
     size_t counter = index - 1;
     auto iter = m_head;
@@ -131,7 +124,7 @@ SLLNode<T> *SingleLinkedList<T>::indexToPointer(const size_t index)
 
     if(iter == nullptr)
     {
-        throw std::invalid_argument("SingleLinkedList<T>::countdwon, index out of range");
+        throw std::invalid_argument("error, SingleLinkedList<T>::countdwon, index out of range");
     }
 
     return iter;
@@ -159,13 +152,27 @@ SLLNode<T>* SingleLinkedList<T>::tail()
 template<typename T>
 void SingleLinkedList<T>::insert(const size_t index, const T& e)
 {
-    insert(indexToPointer(index), e);
+    try
+    {
+        insert(indexToPointer(index), e);
+    }
+    catch(std::invalid_argument &)
+    {
+        throw std::invalid_argument("error, SingleLinkedList<T>::insert, index out of range");
+    }
 }
 
 template<typename T>
 void SingleLinkedList<T>::remove(const size_t index)
 {
-    remove(indexToPointer(index));
+    try
+    {
+        remove(indexToPointer(index));
+    }
+    catch(std::invalid_argument &)
+    {
+        throw std::invalid_argument("error, SingleLinkedList<T>::remove, index out of range");
+    }
 }
 
 template<typename T>
@@ -179,6 +186,31 @@ size_t SingleLinkedList<T>::size()
         ++count;
     }
     return count;
+}
+
+
+template<typename T>
+void SingleLinkedList<T>::clear()
+{
+    auto tmp = m_head->next;
+    if(m_log)
+    {
+        std::cout << "clear the SLL\n";
+    }
+    while(tmp)
+    {
+       auto tmp2 = tmp;
+       tmp = tmp->next;
+       if(m_log)
+       {
+           std::cout << "Delete the SLLNode{" << tmp2->data  << ", " <<tmp2->next << "} @ " << tmp2 << std::endl;
+       }
+       delete tmp2;
+    }
+    if(m_log)
+    {
+        std::cout << "clear done\n";
+    }
 }
 
 template<typename T>
@@ -223,6 +255,7 @@ SLLNode<T> *SingleLinkedList<T>::find(std::function<bool(const T& e)> predicate)
         {
             return iter;
         }
+        iter = iter->next;
     }
     return nullptr;
 }
@@ -262,5 +295,24 @@ std::ostream& operator<<(std::ostream& os, SingleLinkedList<T>& sll)
     }
     return os;
 }
+
+template<typename T>
+void splitList(SingleLinkedList<T>& sll, SingleLinkedList<T>& t, SingleLinkedList<T>& f, std::function<bool(const T&)> predicate)
+{
+    auto iter = sll.head()->next;
+    while(iter)
+    {
+        if(predicate(iter->data))
+        {
+            t.insertTail(iter->data);
+        }
+        else
+        {
+            f.insertTail(iter->data);
+        }
+        iter = iter -> next;
+    }
+}
+
 
 #endif
