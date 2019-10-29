@@ -1,0 +1,1 @@
+add_executable(list_test ./main.cc)
