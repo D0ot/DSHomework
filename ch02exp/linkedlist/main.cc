@@ -553,7 +553,7 @@ void interface(void)
     int choice;
     std::string tmp;
     showPrompts();
-    std::cout << "请输入实验编号 1~14 查看实验结果, 键入非数字内容即可退出\n";
+    std::cout << "请输入实验编号 1~16 查看实验结果, 键入非数字内容即可退出\n";
     std::cin >> choice;
     while(std::cin)
     {

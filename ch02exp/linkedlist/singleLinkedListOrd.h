@@ -22,9 +22,6 @@ class SingleLinkedListOrd : public SingleLinkedList<T>
     template<typename P>
     friend bool isSubsetOf(SingleLinkedListOrd<P> &l1, SingleLinkedListOrd<P> &l2);
 
-    template<typename T>
-    friend T bothMidValue(SingleLinkedList<T> &l1, SingleLinkedList<T> &l2)
-
 public:
     SingleLinkedListOrd(){/*doing nothing*/};
     virtual ~SingleLinkedListOrd(){/*doing nothing*/};
