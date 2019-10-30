@@ -42,6 +42,19 @@ std::unique_ptr<SingleLinkedList<T>> generateSLLFromInput(void)
     return ptr;
 }
 
+template<typename T>
+std::unique_ptr<SingleLinkedListOrd<T>> generateSLLOFromInput(void)
+{
+    auto ptr = std::make_unique<SingleLinkedListOrd<T>>();
+    auto process = [&ptr](const T& e){
+        ptr->insertOrd(e);
+        return true;
+    };
+    getSequenceFromInput<T>(process);
+    return ptr;
+}
+
+
 
 template<typename T>
 void generateSLLOFromVector(const std::vector<T> &v, SingleLinkedListOrd<T>& sllo)
@@ -438,7 +451,7 @@ void exp13(void)
         std::cout << "List1 : " << s1 << std::endl;
         std::cout << "List2 : " << s2 << std::endl;
         std::cout << "After the operation.\n";
-        unionList(s1, s2);
+        combineList(s1, s2);
         std::cout << "List1 : " << s1 << std::endl << std::endl;
     };
 
@@ -447,6 +460,58 @@ void exp13(void)
     exp13_aux(tc3_1, tc3_2);
 
 }
+
+void exp14(void)
+{
+    std::cout << "input A set : ";
+    auto pA = generateSLLOFromInput<int>();
+    std::cout << "input B set : ";
+    auto pB = generateSLLOFromInput<int>();
+
+    auto &A = *pA;
+    auto &B = *pB;
+    
+
+    SingleLinkedListOrd<int> C;
+
+    unionList(A, B, C);
+    std::cout << "Union A and B : " << C << std::endl;
+
+    SingleLinkedListOrd<int> C2;
+    interSectionList(A, B, C2);
+    std::cout << "Intersection A and B : " << C2 << std::endl;
+
+    SingleLinkedListOrd<int> C3;
+    differenceList(A, B, C3);
+    std::cout << "difference A and B : " << C3 << std::endl;
+}
+
+void exp15(void)
+{
+    std::cout << "input A set : ";
+    auto pA = generateSLLOFromInput<int>();
+    std::cout << "input B set : ";
+    auto pB = generateSLLOFromInput<int>();
+
+    auto &A = *pA;
+    auto &B = *pB;
+    
+    auto ret = isSubsetOf(A, B);
+    std::cout << "A is Subsetof B ? : " << ret << std::endl;
+
+}
+
+void exp16(void)
+{
+    std::cout << "Create list : \n";
+    auto pA = generateSLLOFromInput<int>();
+    auto &A = *pA;
+    
+    std::cout << "List : " << A << std::endl;
+    
+    std::cout << "The last 4 node's data is " << lastNNode(A, 4)->data << std::endl;
+}
+
 
 
 void interface(void)
@@ -465,7 +530,10 @@ void interface(void)
         "10.分开单链表中的奇数与偶数项",
         "11.求两个递增有序单链表L1和L2中的公共元素",
         "12.删除递增有序单链表中的重复元素",
-        "13.合并两个单增有序单链表"
+        "13.合并两个单增有序单链表",
+        "14.扩展实验，单链表表示集合Ａ，Ｂ实现交集，并集，差集",
+        "15.扩展实验，判断子集",
+        "16.扩展实验，取得倒数位置的结点"
     };
     
     auto showPrompts = [&]()
@@ -479,17 +547,17 @@ void interface(void)
 
     std::vector<std::function<void(void)>> fs
     {
-        exp1, exp2, exp3, exp4, exp5, exp6, exp7, exp8, exp9, exp10, exp11, exp12, exp13
+        exp1, exp2, exp3, exp4, exp5, exp6, exp7, exp8, exp9, exp10, exp11, exp12, exp13, exp14, exp15, exp16
     };
 
     int choice;
     std::string tmp;
     showPrompts();
-    std::cout << "请输入实验编号 1~13 查看实验结果, 键入非数字内容即可退出\n";
+    std::cout << "请输入实验编号 1~14 查看实验结果, 键入非数字内容即可退出\n";
     std::cin >> choice;
     while(std::cin)
     {
-        if(choice > 0 && choice <= 13)
+        if(choice > 0 && choice <= fs.size()) 
         {
             system("/usr/bin/clear");
             std::cout << prompts[choice-1] << std::endl;

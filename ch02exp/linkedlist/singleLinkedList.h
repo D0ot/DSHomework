@@ -25,6 +25,8 @@ class SingleLinkedList
     template<typename P>
     friend void splitList(SingleLinkedList<P>& sll, SingleLinkedList<P>& t, SingleLinkedList<P>& f, std::function<bool(const P&)> predicate);
 
+    template<typename P>
+    friend SLLNode<P>* lastNNode(SingleLinkedList<P>& l, size_t n);
 private:
     SLLNode<T> *m_head;
     bool m_log;
@@ -312,6 +314,33 @@ void splitList(SingleLinkedList<T>& sll, SingleLinkedList<T>& t, SingleLinkedLis
         }
         iter = iter -> next;
     }
+}
+
+
+template<typename T>
+SLLNode<T>* lastNNode(SingleLinkedList<T>& l, size_t n)
+{
+    auto front = l.head()->next;
+    auto end = l.head()->next;
+    auto i = n;
+    while(i && front)
+    {
+        front = front -> next;
+        i = i - 1;
+    }
+
+    if(i != 0)
+    {
+        return nullptr;
+    }
+
+    while(front)
+    {
+        end = end->next;
+        front = front->next;
+    }
+
+    return end;
 }
 
 
