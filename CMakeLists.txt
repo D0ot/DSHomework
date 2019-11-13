@@ -9,6 +9,7 @@ add_subdirectory(googletest)
 add_subdirectory(ch02)
 add_subdirectory(ch02exp)
 add_subdirectory(ch03)
+add_subdirectory(ch03exp)
 
 add_executable(DSHomeWork main.cpp)
 target_compile_options(DSHomeWork PRIVATE -g -Wall -Wextra)

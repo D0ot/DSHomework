@@ -22,15 +22,6 @@ void stackOutputSeq(std::vector<int> &s, std::vector<int> &input, std::vector<in
     };
 
 
-    /*std::cout << std::endl;
-    std::cout << "s : ";
-    show(s);
-    std::cout << "i : ";
-    show(input);
-    std::cout << "o : ";
-    show(output);*/
-
-
     if(s.empty() && input.empty())
     {
         ++count;
