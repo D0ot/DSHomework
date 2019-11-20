@@ -1,1 +1,2 @@
-add_executable(ch03_stack main.cc)
+add_subdirectory(stack)
+add_subdirectory(queue)
