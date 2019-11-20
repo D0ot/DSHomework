@@ -66,6 +66,11 @@ void ListQueue<T>::enQueue(const T& e)
 template<typename T>
 void ListQueue<T>::deQueue()
 {
+    if(empty())
+    {
+        throw QueueException("an empty called deQueue");
+    }
+
     if(d_front == d_rear)
     {
         delete d_front;

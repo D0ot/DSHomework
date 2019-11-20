@@ -15,10 +15,6 @@ class QueueException : public std::exception
 };
 
 
-
-
-
-
 template<typename T>
 class IQueue
 {
