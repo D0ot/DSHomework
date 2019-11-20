@@ -4,6 +4,7 @@
 
 #include <iostream>
 #include <exception>
+#include <functional>
 
 class QueueException : public std::exception
 {
@@ -13,10 +14,6 @@ class QueueException : public std::exception
     QueueException(const std::string& m) : msg(m) {};
     virtual const char *what() const noexcept { return msg.c_str(); };
 };
-
-
-
-
 
 
 template<typename T>
@@ -29,6 +26,7 @@ class IQueue
     virtual bool empty() = 0; 
     virtual const T& front() = 0;
     virtual size_t size() = 0;
+    virtual void traverse(std::function<void(const T&)> f) = 0;
     virtual ~IQueue() {};
 };
 

@@ -22,6 +22,7 @@ class SeqQueue : public IQueue<T>
     virtual bool empty();
     virtual const T& front();
     virtual size_t size();
+    virtual void traverse(std::function<void(const T&)> f);
 };
 
 
@@ -76,5 +77,18 @@ template<typename T, size_t N>
 size_t SeqQueue<T, N>::size()
 {
     return (N + d_rear - d_front) % N;
+}
+
+
+template<typename T, size_t N>
+void SeqQueue<T, N>::traverse(std::function<void(const T&)> f)
+{
+
+    size_t i = d_front;
+    while(i != d_rear)
+    {
+        i = (i + 1) % N;
+        f(d_data[i]);
+    }
 }
 #endif

@@ -36,6 +36,7 @@ class ListQueue : public IQueue<T>
     virtual const T& front();
     virtual size_t size();
     virtual ~ListQueue() { destory(); };
+    virtual void traverse(std::function<void(const T&)> f);
 };
 
 template<typename T>
@@ -66,6 +67,11 @@ void ListQueue<T>::enQueue(const T& e)
 template<typename T>
 void ListQueue<T>::deQueue()
 {
+    if(empty())
+    {
+        throw QueueException("an empty called deQueue");
+    }
+
     if(d_front == d_rear)
     {
         delete d_front;
@@ -119,6 +125,18 @@ size_t ListQueue<T>::size()
         iter = iter->next;
     }
     return count;
+}
+
+
+template<typename T>
+void ListQueue<T>::traverse(std::function<void(const T&)> f)
+{
+    SLLNode<T> *iter = d_front;
+    while(iter)
+    {
+        f(iter->data);
+        iter = iter->next;
+    }
 }
 
 
