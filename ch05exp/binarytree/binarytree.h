@@ -25,7 +25,26 @@ struct BtNode
         left = nullptr;
         right = nullptr;
     }
+
 };
+
+void destoryBinaryTree(BtNode* t)
+{
+    if(t)
+    {
+        if(t->left)
+        {
+            destoryBinaryTree(t->left);
+        }
+
+        if(t->right)
+        {
+            destoryBinaryTree(t->right);
+        }
+        
+        delete t;
+    }
+}
 
 BtNode *createBinaryTreeFromFile(const std::string fileName)
 {

@@ -52,40 +52,7 @@ void QueueTest(IQueue<T> &q)
     SHOW_EXP(q.size());
 }
 
-void printMenu(const std::vector<std::string> &items)
-{
-    for (size_t i = 0; i < items.size(); ++i)
-    {
-        std::cout << i << ". " << items[i] << std::endl;
-    }
-}
 
-void clearBuf()
-{
-    std::cin.clear();
-    std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
-}
-
-size_t getNumInput()
-{
-    clearBuf();
-    size_t choice = 0;
-    std::cin >> choice;
-    return choice;
-}
-
-void clearScreen()
-{
-    system("/usr/bin/clear");
-}
-
-void waitEnter()
-{
-    clearBuf();
-    std::string temp;
-    std::cout << "Press Enter to continue\n";
-    std::getline(std::cin, temp);
-}
 
 void printMenu()
 {
