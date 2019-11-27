@@ -99,7 +99,7 @@ void exp7()
     std::cout << "Please input a Char\n:";
     std::cin >> input;
 
-    treeShowNearBy(bt21, input);
+    treeFind(bt21, input);
 }
 
 void exp8()

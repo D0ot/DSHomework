@@ -233,18 +233,41 @@ size_t treeNode2DegCount(BtNode *root)
 void treeShowNearBy(BtNode *result, const char e);
 BtNode *treeFind(BtNode *root, const char e)
 {
+    if(e == root->data)
+    {
+        auto it = root;
+        std::cout << "Node : " << e << " found.\n";
+        std::cout << "It is root node, no parent\n";
+        if (it->left)
+        {
+            std::cout << "left child : " << it->left->data << std::endl;
+        }
+        else
+        {
+            std::cout << "no left child\n";
+        }
+
+        if (it->right)
+        {
+            std::cout << "right child : " << it->right->data << std::endl;
+        }
+        else
+        {
+            std::cout << "no right child\n";
+        }
+        return nullptr;
+    }
+
     BtNode *result = nullptr;
     auto mid = [&result, e](BtNode *root) {
         if (root->left && root->left->data == e)
         {
             result = root;
-            return;
         }
 
-        if (root->right && root->left->data == e)
+        if (root->right && root->right->data == e)
         {
             result = root;
-            return;
         }
     };
     advancedOrder(root, doNothing, mid, doNothing);
