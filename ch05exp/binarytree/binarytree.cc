@@ -203,49 +203,5 @@ int main(void)
     };
 
     mainLoop(funs);
-
-
-  /*  void(*funs[])() = 
-    {
-        exp1, exp2, exp3, exp4, exp5, exp6, exp7,
-        exp8, exp9, exp10, exp11, exp12, exp13, exp14, exp15
-    };
-
-    int n = 0;
-    while(1)
-    {
-        std::cout << "请输入实验编号 1 - 7 查看实验结果。\n";
-        std::cout << "键入非数字内容即可退出\n";
-
-        std::cin >> n;
-
-
-        if(!std::cin.good())
-        {
-            break;
-        }
-
-        if(n <=0 || n > 15)
-        {
-            std::cout << "输入数字无效，请重新输入\n";
-        }
-        else
-        {
-            clearScreen();
-            std::cout << "--------------------\n";
-            clearBuf();
-            (funs[n-1])();
-            std::cout << "--------------------\n";
-            std::string temp;
-            waitEnter();
-        }
-
-
-    }
-    std::cout << "键入非数字内容，程序退出。\n";
-
-    destory();
-
-    */
     return 0;
 }
