@@ -181,8 +181,11 @@ void exp13()
 
 void exp14()
 {
-    SHOW_EXP(treeSharedAncestor(bt261, 'e', 'd'));
-    SHOW_EXP(treeSharedAncestor(bt21, 'e', 'd'));
+    char input1, input2;
+    std::cout << "Please input 2 char\n";
+    std::cin >> input1 >> input2;
+    SHOW_EXP(treeSharedAncestor(bt261, input1, input2));
+    SHOW_EXP(treeSharedAncestor(bt21, input1, input2));
 }
 
 void exp15()

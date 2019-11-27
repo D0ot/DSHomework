@@ -535,14 +535,34 @@ char treeSharedAncestor(BtNode *root, char e1, char e2)
         return '#';
     }
 
-    for (size_t i = 0; i < vv1[0].size() && i < vv2[0].size(); ++i)
+    std::cout << "---1\n";
+    for(auto &&x : vv1[0])
+    {
+        std::cout << x << ' ';
+    }
+    std::cout << "---2\n";
+    for(auto &&x : vv2[0])
+    {
+        std::cout << x << ' ';
+    }
+    
+    std::cout << "---3\n";
+    size_t i;
+    for (i = 0; i < vv1[0].size() && i < vv2[0].size(); ++i)
     {
         if (vv1[0][i] != vv2[0][i])
         {
             return vv1[0][i - 1];
         }
     }
-    return '#';
+
+    if(vv1[0][i-1] == vv2[0][i-1])
+    {
+        return vv1[0][i-1];
+    }
+
+
+    return root->data;
 }
 
 //========================================================================
