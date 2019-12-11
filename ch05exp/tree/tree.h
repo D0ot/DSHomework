@@ -196,22 +196,22 @@ int forestDegree(Tree *t)
         return 0;
     }
 
-    int max = 1;
+    int max = 0;
 
     int sibMax = 0;
 
-    Tree *tmp = t;
+    Tree *tmp = t->left;
     while (tmp)
     {
         ++max;
-        int thisTimeMax = forestDegree(tmp->left);
+        int thisTimeMax = forestDegree(tmp);
 
         if (thisTimeMax > sibMax)
         {
             sibMax = thisTimeMax;
         }
 
-        tmp = tmp->left;
+        tmp = tmp->right;
     }
 
     if (max > sibMax)
