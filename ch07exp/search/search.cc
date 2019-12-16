@@ -121,7 +121,11 @@ void exp5()
 
 int main(void)
 {
-    exp5();
+    std::vector<std::function<void(void)>> funs = 
+    {
+        exp1, exp2, exp3, exp4, exp5
+    };
 
+    mainLoop(funs);
     return 0;
 }
