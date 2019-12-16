@@ -3,6 +3,7 @@
 
 void exp1()
 {
+    std::cout << "Binary Search\n";
     std::vector<int> data = {
         1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 17, 18, 19, 20, 24, 25, 26, 30, 35, 40, 45, 50, 100};
 
@@ -31,6 +32,7 @@ void exp1()
 
 void exp2()
 {
+    std::cout << "Insertion about Binary Sorting Tree\n";
     std::vector<int> ds = {
         100, 150, 120, 50, 70, 60, 80, 170, 180, 160, 110, 30, 40, 35, 175};
 
@@ -46,6 +48,7 @@ void exp2()
 
 void exp3()
 {
+    std::cout << "Find given value in Binary Sorting Tree\n";
     std::vector<int> data = {
         1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 17, 18, 19, 20, 24, 25, 26, 30, 35, 40, 45, 50, 100};
 
@@ -81,7 +84,7 @@ void exp3()
 
 void exp4()
 {
-
+    std::cout << "Delete Value in Binary Sorting Tree\n";
     std::vector<int> data = {
         1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 17, 18, 19, 20, 24, 25, 26, 30, 35, 40, 45, 50, 100};
 
@@ -101,6 +104,7 @@ void exp4()
 
 void exp5()
 {
+    std::cout << "Build A Blanced Binary Sorting Tree\n";
     std::vector<int> ds;
 
     for (int i = 1; i <= 26; ++i)
