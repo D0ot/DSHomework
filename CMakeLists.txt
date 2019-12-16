@@ -12,6 +12,7 @@ add_subdirectory(ch03)
 add_subdirectory(ch03exp)
 add_subdirectory(ch05exp)
 add_subdirectory(ch07exp)
+add_subdirectory(ch08exp)
 
 add_executable(DSHomeWork main.cpp)
 target_compile_options(DSHomeWork PRIVATE -g -Wall -Wextra)
