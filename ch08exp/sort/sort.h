@@ -45,7 +45,7 @@ size_t &moveCounter()
     return i;
 }
 
-std::tuple<size_t, size_t, size_t> countSortAlgorithm(std::function<void(std::vector<int> &)> f, std::vector<int> ds)
+std::tuple<size_t, size_t, size_t> countSortAlgorithm(std::function<void(std::vector<int> &)> f, std::vector<int> &ds)
 {
     compareCounter() = 0;
     moveCounter() = 0;
@@ -64,11 +64,13 @@ std::vector<std::tuple<size_t, size_t, size_t>> countSort(std::function<void(std
     return ret;
 }
 
-void showVectorOfTriple(std::vector<std::tuple<size_t, size_t, size_t>> &ds)
+
+void showVectorOfTriple(std::vector<std::tuple<size_t, size_t, size_t>> &ds, std::ostream& os = std::cout)
 {
+    os << "n;compare;move\n";
     for (auto &&x : ds)
     {
-        std::cout << std::get<0>(x) << ";" << std::get<1>(x) << ";" << std::get<2>(x) << std::endl;
+        os<< std::get<0>(x) << ";" << std::get<1>(x) << ";" << std::get<2>(x) << std::endl;
     }
 }
 
@@ -145,13 +147,13 @@ int partByPredicate(std::function<bool(int)> &&f, std::vector<int> &ds, int star
             ++l;
         }
 
-        while(l < r&& !f(ds[r]))
+        while (l < r && !f(ds[r]))
         {
             compareCounter()++;
             --r;
         }
-        
-        if(l < r)
+
+        if (l < r)
         {
             moveCounter()++;
             std::swap(ds[l], ds[r]);
@@ -162,31 +164,71 @@ int partByPredicate(std::function<bool(int)> &&f, std::vector<int> &ds, int star
 
 int partByPredicate(std::function<bool(int)> &&f, std::vector<int> &ds)
 {
-    return partByPredicate(std::forward<std::function<bool(int)>&&>(f), ds, 0, ds.size()-1);
+    return partByPredicate(std::forward<std::function<bool(int)> &&>(f), ds, 0, ds.size() - 1);
 }
 
-void partByResOf3(std::vector<int>&ds)
+void partByResOf3(std::vector<int> &ds)
 {
-    auto f1 = [](int n)
-    {
-        return n%3 == 0;
+    auto f1 = [](int n) {
+        return n % 3 == 0;
     };
-    
-    auto f2 = [](int n)
-    {
-        return n%3 == 1;
+
+    auto f2 = [](int n) {
+        return n % 3 == 1;
     };
 
     int pos = partByPredicate(f1, ds);
-    partByPredicate(f2, ds, pos, ds.size()-1);
-    
+    partByPredicate(f2, ds, pos, ds.size() - 1);
 }
 
-
-void insertSort(std::vector<int> &ds, int stride)
+void insertSortWithStride(std::vector<int> &ds, int stride, int offset = 0)
 {
-    int i = 0;
+    // left is sorted, right is not sorted
+    // sep itself is sorted
+
+
+    int sep = offset;
+    int iter;
+    while (sep + stride < ds.size())
+    {
+        compareCounter()++;
+        iter = sep;
+        int key = ds[sep + stride];
+        while (iter >= 0 && key < ds[iter])
+        {
+            compareCounter()++;
+            compareCounter()++;
+            ds[iter + stride] = ds[iter];
+            moveCounter()++;
+            iter -= stride;
+        }
+        ds[iter + stride] = key;
+
+        sep += stride;
+    }
 }
 
+void insertSort(std::vector<int> &ds)
+{
+    insertSortWithStride(ds, 1);
+}
+
+void shellSort(std::vector<int> &ds, const std::vector<int> &incSeq)
+{
+    int start = incSeq.size()-1;
+    while(incSeq[start]> ds.size())
+    {
+        --start;
+    }
+
+    std::cout << "start:" << start << std::endl;
+
+    for(int i = start; i >0; --i)
+    {
+        insertSortWithStride(ds, incSeq[i]);
+    }
+
+    insertSortWithStride(ds, 1);
+}
 
 #endif

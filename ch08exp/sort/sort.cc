@@ -1,6 +1,7 @@
 #include "sort.h"
 #include "tools.h"
 #include <algorithm>
+#include <fstream>
 
 void exp1()
 {
@@ -37,7 +38,7 @@ void exp2()
     auto show = [](auto &ds) {
         auto ret = countSortAlgorithm(partByResOf3, ds);
         partByResOf3(ds);
-        std::cout << "Part Result:"; 
+        std::cout << "Part Result:";
         for (auto &&x : ds)
         {
             std::cout << x << ' ';
@@ -52,8 +53,47 @@ void exp2()
     show(ds3);
 }
 
+void exp3()
+{
+    auto ds = generateRandomSeq(1000, 30000);
+    std::vector<int> sedgewickSeq{
+        1, 5, 19, 41, 109, 209, 505, 929,
+        2161, 3905, 8929, 16001, 36289, 64769, 146305, 260609,
+        587521, 1045505, 2354689, 4188161, 9427969, 16764929, 37730305, 67084289,
+        150958081, 268386305, 603906049, 1073643521};
+    std::vector<int> hibbardSeq{
+        1, 3, 7, 15, 31, 63, 127, 255,
+        511, 1023, 2047, 4095, 8191, 16383, 32767, 65535,
+        131071, 262143, 524287, 1048575, 2097151, 4194303, 8388607, 16777215,
+        33554431, 67108863, 134217727, 268435455, 536870911, 1073741823};
+
+    auto linear = []() {
+        static size_t counter = 0;
+        return (++counter) * 1000;
+    };
+
+    auto shellSortHibbard = std::bind(shellSort, std::placeholders::_1, hibbardSeq);
+    auto shellSortSedgewick= std::bind(shellSort, std::placeholders::_1, sedgewickSeq);
+
+    auto dss = generateTable(linear, 1000000, 100);
+    auto ret = countSort(shellSortHibbard, dss);
+    auto ret2 = countSort(shellSortSedgewick , dss);
+
+    std::ofstream ofhib("hibbard.csv", std::ios::trunc);
+    showVectorOfTriple(ret, ofhib);
+
+    std::ofstream ofsed("sedgewick.csv", std::ios::trunc);
+    showVectorOfTriple(ret2, ofsed);
+
+}
+
+void exp4()
+{
+
+}
+
 int main(void)
 {
-    exp2();
+    exp3();
     return 0;
 }
