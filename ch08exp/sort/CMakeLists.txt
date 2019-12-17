@@ -1,2 +1,2 @@
 add_executable(ch08exp_sort sort.cc)
-target_compile_options(ch08exp_sort PUBLIC -O2)
+target_compile_options(ch08exp_sort PUBLIC -O3)

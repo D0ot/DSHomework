@@ -6,6 +6,14 @@
 #include <random>
 #include <tuple>
 #include <functional>
+#include <iomanip>
+auto showVec = [](auto &&ds) {
+    for (auto &&x : ds)
+    {
+        std::cout << std::setw(5) << x; 
+    }
+    std::cout << std::endl;
+};
 
 std::vector<int> generateRandomSeq(size_t n, int max)
 {
@@ -64,13 +72,12 @@ std::vector<std::tuple<size_t, size_t, size_t>> countSort(std::function<void(std
     return ret;
 }
 
-
-void showVectorOfTriple(std::vector<std::tuple<size_t, size_t, size_t>> &ds, std::ostream& os = std::cout)
+void showVectorOfTriple(std::vector<std::tuple<size_t, size_t, size_t>> &ds, std::ostream &os = std::cout)
 {
     os << "n;compare;move\n";
     for (auto &&x : ds)
     {
-        os<< std::get<0>(x) << ";" << std::get<1>(x) << ";" << std::get<2>(x) << std::endl;
+        os << std::get<0>(x) << ";" << std::get<1>(x) << ";" << std::get<2>(x) << std::endl;
     }
 }
 
@@ -113,6 +120,12 @@ int partition(std::vector<int> &ds, int l, int r)
     return q;
 }
 
+bool &quickSortShow()
+{
+    static bool show;
+    return show;
+}
+
 void quickSortInner(std::vector<int> &ds, int l, int r)
 {
     if (l >= r)
@@ -120,7 +133,45 @@ void quickSortInner(std::vector<int> &ds, int l, int r)
         return;
     }
 
+    if (quickSortShow())
+    {
+        std::cout << "Partition (" << l << ", " << r << ")\n";
+        int i = 0;
+        while (i < ds.size())
+        {
+            if (i >= l && i <= r)
+            {
+                std::cout << std::setw(5) << ds[i];
+            }
+            else
+            {
+                std::cout << std::setw(5) << ' ';
+            }
+            ++i;
+        }
+        std::cout << std::endl;
+    }
     int p = partition(ds, l, r);
+
+    if (quickSortShow())
+    {
+        std::cout << "Partition (" << l << ", " << r << ") Result:\n";
+        int i = 0;
+        while (i < ds.size())
+        {
+            if (i >= l && i <= r)
+            {
+                std::cout << std::setw(5) << ds[i];
+            }
+            else
+            {
+                std::cout << std::setw(5) << ' ';
+            }
+            ++i;
+        }
+        std::cout << std::endl;
+    }
+
     quickSortInner(ds, l, p - 1);
     quickSortInner(ds, p + 1, r);
 }
@@ -186,7 +237,6 @@ void insertSortWithStride(std::vector<int> &ds, int stride, int offset = 0)
     // left is sorted, right is not sorted
     // sep itself is sorted
 
-
     int sep = offset;
     int iter;
     while (sep + stride < ds.size())
@@ -215,20 +265,159 @@ void insertSort(std::vector<int> &ds)
 
 void shellSort(std::vector<int> &ds, const std::vector<int> &incSeq)
 {
-    int start = incSeq.size()-1;
-    while(incSeq[start]> ds.size())
+    int start = incSeq.size() - 1;
+    while (incSeq[start] > ds.size())
     {
         --start;
     }
 
-    std::cout << "start:" << start << std::endl;
-
-    for(int i = start; i >0; --i)
+    for (int i = start; i > 0; --i)
     {
         insertSortWithStride(ds, incSeq[i]);
     }
 
     insertSortWithStride(ds, 1);
+}
+
+inline int leftChild(int p) { return p * 2 + 1; }
+inline int rightChild(int p) { return p * 2 + 2; }
+inline int theParent(int self) { return (self - 1) / 2; }
+
+auto keepHeap = [](std::vector<int> &ds, int l, int r) {
+    int i = 0;
+    //std::cout << "to keep " << ds[i+l] << std::endl;
+    while (i + l <= r)
+    {
+        int maxIndex = i;
+        int max = ds[maxIndex+l];
+
+        if(rightChild(i) + l <= r)
+        {
+            if(max < ds[rightChild(i)+l])
+            {
+                max = ds[rightChild(i)+l];
+                maxIndex = rightChild(i);
+            }
+        }
+
+        if(leftChild(i) + l <= r)
+        {
+            if(max < ds[leftChild(i)+l])
+            {
+                max = ds[leftChild(i)+l];
+                maxIndex = leftChild(i); 
+            }
+        }
+
+        if(max != ds[i+l])
+        {
+            std::swap(ds[i+l], ds[maxIndex+l]);
+            i = maxIndex;
+        }else
+        {
+            break;
+        }
+
+    }
+
+
+};
+// root is max
+void createHeap(std::vector<int> &ds)
+{
+
+    int sep = ds.size() - 1;
+    while (sep >= 0)
+    {
+        keepHeap(ds, sep, ds.size() - 1);
+        --sep;
+    };
+}
+
+
+void heapSort(std::vector<int> &ds)
+{
+    std::cout << "Heap Sort\n";
+
+
+    createHeap(ds);
+    std::cout << "Create Heap result :\n";
+    showVec(ds);
+
+    int sep = ds.size() - 1;
+    while (sep >= 1)
+    {
+        std::swap(ds[0], ds[sep]);
+        keepHeap(ds, 0, sep - 1);
+        std::cout << "Step : \n";
+        showVec(ds);
+        --sep;
+    }
+    std::cout << "Result : \n";
+    showVec(ds);
+}
+
+
+void mergeSort(std::vector<int> &ds, std::vector<int>&out, int l, int r)
+{
+    if(l >= r)
+    {
+        return;
+    }
+
+    int mid = (r-l)/2+l;
+
+    mergeSort(ds, out, l, mid);
+    mergeSort(ds, out, mid+1, r);
+
+    //merge operation
+
+    int s = l;
+
+    int il = l;
+    int ir = mid+1;
+
+    while(il <= mid && ir <= r)
+    {
+        if(ds[il] < ds[ir])
+        {
+            out[s++] = ds[il++];
+        }else
+        {
+            out[s++] = ds[ir++];
+        }
+    }
+
+    while(il <= mid)
+    {
+        out[s++] = ds[il++];
+    }
+
+    while(ir <= r)
+    {
+        out[s++] = ds[ir++];
+    }
+
+    int iter = l;
+    while(iter <= r)
+    {
+        ds[iter] = out[iter];
+        ++iter;
+    }
+
+
+}
+
+void mergeSort(std::vector<int> &ds, std::vector<int> &out)
+{
+    mergeSort(ds, out, 0, ds.size()-1);
+}
+
+void mergeSort(std::vector<int> &ds)
+{
+    std::vector<int> out;
+    out.resize(ds.size());
+    mergeSort(ds, out);
 }
 
 #endif
