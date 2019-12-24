@@ -101,7 +101,7 @@ int nextAdj(Graph &G, int v, int w)
 //* 返 回 值：空                                            *//
 //* 函 数 名：printGraph(Graph &G)                          *//
 //***********************************************************//
-void printGraph(Graph &G)
+void printGraph(Graph &G, bool skipMatrix = false)
 {
 	int i=0,j=0;
 	//打印图的类型
@@ -142,6 +142,12 @@ void printGraph(Graph &G)
 		cout<<endl;
 	}
 	cout<<endl;
+
+	if(skipMatrix)
+	{
+		return;
+	}
+
 	//打印邻接矩阵
 	cout<<"AdjMatrix："<<endl;
 	for(i=1;i<=G.VerNum;i++)
@@ -151,6 +157,9 @@ void printGraph(Graph &G)
 		j=1;
 		while(p!=NULL || j<=G.VerNum)
 		{
+			// debug note:
+			// code here depend on the sequence of vertics index in EdgeNode LinkedList
+			// they must be sequenced, or the print will be a inf loop
 			if((j<=G.VerNum) && (p!=NULL) && j==p->adjVer)  //有边
 			{
 				cout<<p->eInfo<<"\t";
@@ -169,4 +178,5 @@ void printGraph(Graph &G)
 		}
 		cout<<endl;
 	}
+	
 }
