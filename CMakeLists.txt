@@ -11,6 +11,7 @@ add_subdirectory(ch02exp)
 add_subdirectory(ch03)
 add_subdirectory(ch03exp)
 add_subdirectory(ch05exp)
+add_subdirectory(ch06exp)
 add_subdirectory(ch07exp)
 add_subdirectory(ch08exp)
 
