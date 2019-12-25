@@ -196,14 +196,18 @@ void exp9()
 
 void exp10()
 {
-    CREATE_TREE(dn8);
-    CREATE_TREE(dn10);
+    std::cout << "10. Key Path\n";
+    CREATE_TREE(kPath101);
+
+    GraphKeyPath(*kPath101.first);
+
 }
+
 
 int main(void)
 {
     std::vector<std::function<void(void)>> funs =
-        {exp1, exp2, exp3, exp4, exp5, exp6, exp7, exp8, exp9};
+        {exp1, exp2, exp3, exp4, exp5, exp6, exp7, exp8, exp9, exp10};
 
     mainLoop(funs);
 

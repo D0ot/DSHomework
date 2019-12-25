@@ -460,7 +460,7 @@ void GraphFloyd(Graph &G, int dis[], int path[])
     }
 }
 
-void GraphTop(Graph &G, std::vector<int> &seq)
+bool GraphTop(Graph &G, std::vector<int> &seq)
 {
     int num = G.VerNum + 1;
 
@@ -505,10 +505,136 @@ void GraphTop(Graph &G, std::vector<int> &seq)
             edgeIter = edgeIter->next;
         }
     }
+
+    if(seq.size() == G.VerNum)
+    {
+        return true;
+    }
+    else
+    {
+        return false;
+    }
 }
 
 void GraphKeyPath(Graph &G)
 {
+    const int num = G.VerNum + 1;
+    std::vector<int> seq;
+    bool ret1 = GraphTop(G, seq);
+    if(ret1 == false)
+    {
+        // not a AOE net
+        //std::cout << "false\n";
+        return;
+    }
+
+    // first is ver, second is einfo
+    std::vector<std::vector<std::pair<int,int>>> preVers;
+
+    for(int i = 0; i < num; ++i)
+    {
+        preVers.push_back(std::vector<std::pair<int,int>>());
+    }
+
+    for(int i = 1; i < num; ++i)
+    {
+        auto edgeIter = G.VerList[i].firstEdge;
+
+        while(edgeIter)
+        {
+            // i to edgeIter->adjVer, an edge pushed
+            preVers[edgeIter->adjVer].push_back(std::make_pair(i, edgeIter->eInfo));
+            edgeIter = edgeIter->next;
+        }
+
+    }
+
+    int countByMax[num]; // forward
+    int countByMin[num]; // backward
+
+    std::memset(static_cast<void*>(countByMax), 0, sizeof(countByMax));
+    std::memset(static_cast<void*>(countByMin), 0, sizeof(countByMin));
+
+    int tmp;
+    int tmpVer;
+    int i;
+
+    for(int j = 0; j < seq.size(); ++j)
+    {
+        i = seq[j];
+        tmp = 0;
+        tmpVer = 0;
+        for(auto&x : preVers[i])
+        {
+            //std::cout << x.second << ' ';
+            if(tmp < x.second)
+            {
+                tmp = x.second;
+                tmpVer = x.first;
+            }
+        }
+
+        countByMax[i] = countByMax[tmpVer] + tmp;
+    }
+
+    countByMin[num-1] = countByMax[num-1];
+
+    //std::cout << std::endl;
+
+    for(int i = 1; i < num; ++i)
+    {
+        //std::cout << countByMax[i] << ' ';
+    }
+    //std::cout << std::endl;
+
+    for(int j = seq.size()-2; j >= 0; --j)
+    {
+        i = seq[j];
+
+        tmp = 0;
+        tmpVer = 0;
+
+        auto edgeIter = G.VerList[i].firstEdge;
+
+        while(edgeIter)
+        {
+            if(edgeIter->eInfo > tmp)
+            {
+                tmp = edgeIter->eInfo;
+                tmpVer = edgeIter->adjVer;
+            }
+            edgeIter = edgeIter->next;
+        }
+
+        countByMin[i] = countByMin[tmpVer] - tmp;
+    }
+    //std::cout << std::endl;
+
+
+    for(int i = 1; i < num; ++i)
+    {
+        //std::cout << countByMin[i] << ' ';
+    }
+    //std::cout << std::endl;
+
+    for(int i = 1; i < num; ++i)
+    {
+        auto edgeIter = G.VerList[i].firstEdge;
+
+        while(edgeIter)
+        {
+            int left = i;
+            int right = edgeIter->adjVer;
+            if(countByMax[left] + edgeIter->eInfo == countByMin[right])
+            {
+                std::cout << left <<  " to " << right << std::endl;
+            }
+
+            edgeIter = edgeIter->next;
+        }
+
+    }
+
 }
 
 #endif // _GRAPH_H
